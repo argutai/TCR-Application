@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+    <form class="form-inline" method="POST" action="{{ url_for('patients') }}">
+      <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"></span>
+                <select name="comp_select" class="selectpicker form-control">
+                  <option value="" selected disabled hidden>Select a patient...</option>
+                  {% for o in data %}
+                  <option value="{{ o.name }}">{{ o.name }}</option>
+                  {% endfor %}
+                </select>
+        </div>
+        <button type="submit" class="btn btn-default">Go</button>
+      </div>
+    </form>
+    <h1>Patient: {{ patient }} </h1>
+    <p>Genomics: {{ obj.genomics }}</p>
+    <p>Hormad1: {{ obj.hormad1 }}</p>
+
+    <!-- {% for patient_file in patient_files %}
+        <div>
+            <div>
+              <img src="static/figures/KCL_bulk/Sample_bubbles/{{ patient_file }}" width="500" height="400">
+              <div class="media-body">
+                <h3>Sample: {{ patient_file }}</h3>
+                <p class="text-secondary">Legend: Bubble chart</p>
+              </div>
+            </div>
+          </div>
+    {% endfor %} -->
+
+  
+    {% for figure in obj.figures %}
+        <div>
+            <div>
+              <div class="media-body">
+                <img src="static/figures/KCL_bulk/Sample_bubbles/{{ figure.Sample }}.png" width="500" height="400">
+                <h3>{{ figure.Sample }}</h3>
+                <p class="text-secondary">Type: {{ figure.type }}, Protocol: {{ figure.protocol }}</p>
+                <!-- <p class="text-secondary">Pool ID: {{ figure.pool_id }}</p> -->
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+
+{% endblock content %}
+
+<!-- patient_id, sample, protocol, pool_id, type -->

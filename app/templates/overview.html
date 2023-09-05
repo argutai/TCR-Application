@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% for post in posts %}
+        <div>
+            <div>
+              <img src="{{ post.image_path }}" width="500" height="400">
+              <div class="media-body">
+                <h3>{{ post.graph_name }}</h3>
+                <p class="text-secondary">{{ post.legend }}</p>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+{% endblock content %}
