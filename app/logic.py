@@ -3,23 +3,23 @@ import pandas as pd
 
 absolute_path = os.path.dirname(__file__)
 
-path = os.path.join(absolute_path, 'static/figures/KCL_bulk/Sample_bubbles')
+path = os.path.join(absolute_path, 'static/KCL-content/figures/Sample_bubbles')
 bubble_files = os.listdir(path)
 
 posts = [
     {
         'graph_name': 'Bar chart - Clonotype count per sample',
         'legend': 'legend - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae nulla dolor.\n',
-        'image_path': 'static/figures/KCL_bulk/clonotype_count/patient.png'
+        'image_path': 'static/KCL-content/figures/clonotype_count/patient.png'
     },
     {
         'graph_name': 'Bubble plot - Proportion of clonotypes per sample',
         'legend': 'legend - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae nulla dolor.\n',
-        'image_path': 'static/figures/KCL_bulk/clonotype_proportions/barchart.png'
+        'image_path': 'static/KCL-content/figures/clonotype_proportions/barchart.png'
     }
 ]
 
-path = os.path.join(absolute_path, 'static/metadata.txt')
+path = os.path.join(absolute_path, 'static/KCL-content/metadata/metadata.txt')
 metadata = pd.read_csv(path, delimiter='\t')
 
 
