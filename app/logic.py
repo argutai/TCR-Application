@@ -1,7 +1,10 @@
 import os
 import pandas as pd
 
-bubble_files = os.listdir('app/static/figures/KCL_bulk/Sample_bubbles')
+absolute_path = os.path.dirname(__file__)
+
+path = os.path.join(absolute_path, 'static/figures/KCL_bulk/Sample_bubbles')
+bubble_files = os.listdir(path)
 
 posts = [
     {
@@ -16,7 +19,8 @@ posts = [
     }
 ]
 
-metadata = pd.read_csv('app/static/metadata.txt', delimiter='\t')
+path = os.path.join(absolute_path, 'static/metadata.txt')
+metadata = pd.read_csv(path, delimiter='\t')
 
 
 
