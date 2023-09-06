@@ -1,0 +1,3 @@
+[submodule "app/static/figures"]
+	path = app/static/figures
+	url = https://github.com/argutai/KCL-Content.git
