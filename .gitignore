@@ -1,5 +1,5 @@
 # Paths to not commit to git
 app/__pycache__
 init.sh
-app/static/figures/
+app/static/figures/*
 

@@ -1,3 +1,3 @@
-[submodule "app/static/KCL-Content"]
-	path = app/static/KCL-Content
-	url = https://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@github.com/argutai/KCL-Content.git
+[submodule "app/static/figures"]
+	path = app/static/figures
+	url = https://github.com/argutai/KCL-Content.git
