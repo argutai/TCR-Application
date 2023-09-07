@@ -19,18 +19,20 @@ posts = [
     }
 ]
 
-path = os.path.join(absolute_path, 'static/KCL-content/metadata/metadata.txt')
+path = os.path.join(absolute_path, 'static/KCL-content/metadata/metadata.csv')
 metadata = pd.read_csv(path, delimiter='\t')
 
 
 
 class Figure:
-    def __init__(self, patient_id, sample, protocol, pool_id, type):
+    def __init__(self, patient_id, sample, protocol, pool_id, type, expanded):
         self.patient_id = patient_id
         self.Sample = sample
         self.protocol = protocol
         self.pool_id = pool_id
         self.type = type
+        self.expanded = expanded
+
 
 class Patient:
     def __init__(self, patient_id, hormad1, genomics, figures):
@@ -50,7 +52,9 @@ def initialise_patients():
             patient_id = metadata['patient_id'][metadata['Sample']==sample].values[0]
             pool_id = metadata['pool_id'][metadata['Sample']==sample].values[0]
             type = metadata['type'][metadata['Sample']==sample].values[0]
-            patient_figs.append(Figure(patient_id, sample, protocol, pool_id, type))
+            expanded = metadata['expanded'][metadata['Sample']==sample].values[0]
+            # ^condense this
+            patient_figs.append(Figure(patient_id, sample, protocol, pool_id, type, expanded))
         pat = metadata[metadata['patient_id'] == patient]
         hormad1 = list(set(pat['HORMAD1']))[0]
         genomics = list(set(pat['Genomics']))[0]
@@ -59,14 +63,7 @@ def initialise_patients():
     return patient_names, patient_list
 
 patient_names, patient_list = initialise_patients()
-obj = patient_list[patient_names.index('KCL725')]
-# print(obj.genomics)
 
-
-
-
-
-
-# patient = 'KCL717'
-# vars()[patient]
-# print(vars()[patient].figures[0].pool_id)
+# Test:
+# obj = patient_list[patient_names.index('KCL725')]
+# print(obj.figures[0].expanded.split(",")[0])

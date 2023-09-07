@@ -5,8 +5,6 @@ from app import app
 import pandas as pd
 from app.logic import bubble_files, posts, patient_names, patient_list
 
-obj = patient_list[patient_names.index('KCL725')]
-print(obj.patient_id) 
 
 @app.route("/")
 @app.route("/home")
@@ -20,13 +18,11 @@ def overview():
 @app.route("/patients", methods=['GET', 'POST'])
 def patients():
     patient = request.form.get('comp_select')
-    obj = "hi"
-    if(patient is not None): obj = patient_list[patient_names.index(patient)]
+    patient_obj = [] # needs an initialised value ...
+    if(patient is not None): patient_obj = [patient_list[patient_names.index(patient)]]
     if(patient is None): patient = "        "
-    patient_bubble_files=[i for i in bubble_files if patient in i]
-    return render_template('patients.html', patient=patient, obj = obj, patient_files=patient_bubble_files, title='Patients', data=[{'name':'KCL710'}, {'name':'KCL717'}, {'name':'KCL725'}])
+    return render_template('patients.html', patient_obj = patient_obj, patient_names = patient_names)
 
 
-
-# obj = patient_list[patients.index('KCL717')]
-# print(obj.patient_id)
+# obj = patient_list[patient_names.index('KCL717')]
+# print(obj.figures[0].expanded.split(",")[0])
