@@ -1,3 +1,4 @@
 [submodule "app/static/KCL-content"]
 	path = app/static/KCL-content
 	url = https://github.com/argutai/KCL-Content.git
+	branch = main
