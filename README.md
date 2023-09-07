@@ -75,4 +75,4 @@ cat /var/log/apache2/error.log
 
 Check the server to see app is running as expected:
 
-https://tcr-analysis.sites.er.kcl.ac.uk/patients
+https://tcr-analysis.sites.er.kcl.ac.uk
