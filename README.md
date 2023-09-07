@@ -6,6 +6,15 @@ Application for sharing TCR sequencing analyses.
 
 This Flask application is configured to be deployed to an Apache2 server with WSGI, and is currently hosted on a VM on KCL’s CREATE cloud.
 
+### Run locally for development
+
+Clone repo. Install dependencies:
+
+- python, pip
+- Pip install flask, pandas, os, flask_sqlalchemy
+
+comment line in [flaskapp.py](http://flaskapp.py) `app.run(debug=True, host="10.211.116.43", port=443)`, and uncomment `app.run(debug=True)` - this will deploy to your [localhost:5000](http://localhost:5000) instead of the KCL-hosted server. Run `python flaskapp.py`, and connect to localhost:5000 on browser.
+
 ### Steps for updating deployment
 
 Project name: **er_prj_tcr_analytics**. Request access from argutai@hotmail.com. The name of the VM instance is TCR-Analytics which has an IP address [10.211.116.43](mailto:ubuntu@10.211.116.43). 
