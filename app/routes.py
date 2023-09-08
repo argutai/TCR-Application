@@ -9,7 +9,9 @@ from app.logic import bubble_files, posts, patient_names, patient_list
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', title='TCR Analysis Home')
+    client_ip = request.remote_addr
+    print(client_ip)
+    return render_template('home.html', ip=client_ip, title='TCR Analysis Home')
 
 @app.route("/overview")
 def overview():
