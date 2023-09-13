@@ -1,5 +1,6 @@
 # Paths to not commit to git
 app/__pycache__
 init.sh
+instance
 app/static/figures/
 app/static/KCL-content/

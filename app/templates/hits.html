@@ -1,7 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>{{ Hits }}</h1>
-    {% for hit in hits %}
-        <p class="text-secondary"> {{ hit }} </p>
-    {% endfor %}
+    <table>
+        <tr>
+          <th>Date</th>
+          <th>Total IPs</th> 
+          <th>Home</th>
+          <th>Patients</th>
+          <th>Projects</th>
+        </tr>
+        {% for day_hits in day_hits %}
+        <tr>
+            <td> {{ day_hits.day }} </td>
+            <td> {{ day_hits.ip2|length }} </td>
+            <td> {{ day_hits.home }} </td>
+            <td> {{ day_hits.patients }} </td>
+            <td> {{ day_hits.prj_landscape }} </td>
+        </tr>
+        {% endfor %}
+      </table>
 {% endblock content %}

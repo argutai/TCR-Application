@@ -1,16 +1,33 @@
 from app import db
 
 
-class Hit(db.Model):
     
-    id = db.Column(db.Integer, primary_key=True)
-    IP_address = db.Column('IP_address', db.String(20))
-    Page = db.Column('Page', db.String(20))
-    Date = db.Column('Date', db.String())
-    
-    def __repr__(self):
-        return f"IP address: {self.IP_address},  Page: {self.Page},  Date: {self.Date}"
-        
+class IpView(db.Model):
+    id = db.Column("id", db.Integer, primary_key=True) #, db.ForeignKey(date.id)
+    date_id = db.Column('date_id', db.Integer, db.ForeignKey('date.id'))
+    ip = db.Column("ip", db.String(20))
+    # dates = db.relationship('Date', backref='ip_diffname', lazy=True)
+
+    def __init__(self, ip, date_id):
+        self.ip = ip
+        self.date_id = date_id
+
+class Date(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    day = db.Column('day', db.String)
+    patients = db.Column('patients', db.String)
+    home = db.Column('home', db.String)
+    prj_landscape = db.Column('prj_landscape', db.String)
+    # ip_id = db.Column('ip_id', db.Integer, db.ForeignKey('ip_view.id'))
+    ip2 = db.relationship('IpView', backref='date_diffname', lazy=True)
+
+    def __init__(self, day, home, patients, prj_landscape):
+        self.day = day
+        # self.ip_id = ip_id
+        self.home = home
+        self.patients = patients
+        self.prj_landscape = prj_landscape
+
 # >>> from app import app, db
 # >>> app.app_context().push()
 # >>> db.create_all()
