@@ -9,23 +9,23 @@ def get_current_day():
     today = datetime.date.today()
     return today.strftime("%Y-%m-%d") 
 
-app.app_context().push()
-db.create_all()
+# app.app_context().push()
+# db.create_all()
 
 @app.route("/")
 @app.route("/home")
 def home():
-    client_ip = request.remote_addr 
-    new_IP = Hit(IP_address=client_ip, Page='Home', Date=get_current_day())
-    db.session.add(new_IP); db.session.commit()
+    # client_ip = request.remote_addr 
+    # new_IP = Hit(IP_address=client_ip, Page='Home', Date=get_current_day())
+    # db.session.add(new_IP); db.session.commit()
 
     return render_template('home.html', title='TCR Analysis Home')
 
 @app.route("/overview")
 def overview():
-    client_ip = request.remote_addr 
-    new_IP = Hit(IP_address=client_ip, Page='Overview', Date=get_current_day())
-    db.session.add(new_IP); db.session.commit()
+    # client_ip = request.remote_addr 
+    # new_IP = Hit(IP_address=client_ip, Page='Overview', Date=get_current_day())
+    # db.session.add(new_IP); db.session.commit()
 
     return render_template('overview.html', posts=posts, title='Overview')
 
@@ -35,9 +35,9 @@ def project_landscape():
  
 @app.route("/patients", methods=['GET', 'POST'])
 def patients():
-    client_ip = request.remote_addr 
-    new_IP = Hit(IP_address=client_ip, Page='Patients', Date=get_current_day())
-    db.session.add(new_IP); db.session.commit()
+    # client_ip = request.remote_addr 
+    # new_IP = Hit(IP_address=client_ip, Page='Patients', Date=get_current_day())
+    # db.session.add(new_IP); db.session.commit()
 
     patient = request.form.get('comp_select')
     patient_obj = [] # needs an initialised value ...
@@ -47,7 +47,7 @@ def patients():
  
 @app.route("/hits")
 def hits():
-    hits = Hit.query.all() 
+    hits = "hi" #Hit.query.all() 
     return render_template('hits.html', hits = hits)
 
 # obj = patient_list[patient_names.index('KCL717')]
