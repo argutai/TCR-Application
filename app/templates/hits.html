@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ Hits }}</h1>
+    {% for hit in hits %}
+        <p class="text-secondary"> {{ hit }} </p>
+    {% endfor %}
+{% endblock content %}

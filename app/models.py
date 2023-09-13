@@ -1,19 +1,21 @@
 from app import db
 
-class Graph(db.Model):
+
+class Hit(db.Model):
+    
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpeg')
-
+    IP_address = db.Column('IP_address', db.String(20))
+    Page = db.Column('Page', db.String(20))
+    Date = db.Column('Date', db.String())
+    
     def __repr__(self):
-        return f"Graph('{self.title}', '{self.image_file}')"
-
+        return f"IP address: {self.IP_address},  Page: {self.Page},  Date: {self.Date}"
+        
 # >>> from app import app, db
 # >>> app.app_context().push()
 # >>> db.create_all()
-# >>> from app imort Graph
-# >>> from app import Graph
-# >>> tcell_plot_per_sample = Graph(title='T Cell Plot Per Sample', image_file='figures/clonotype_count/clonotype_count_per_SAMPLE_ID.png')
-# >>> db.session.add(tcell_plot_per_sample)
-# >>> Graph.query.all() 
+# >>> from app.models import Hit
+# >>> new_IP = Hit(IP_address='1.00.390.98', Date='2023-09-11')
+# >>> db.session.add(new_IP)
+# >>> Hit.query.all() 
 # >>> db.drop_all() # clears all data from db
