@@ -9,14 +9,14 @@
           <th>Patients</th>
           <th>Projects</th>
         </tr>
-        <!-- {% for day_hits in day_hits %}
-        <tr> -->
-            <!-- <td> {{ day_hits.day }} </td>
+        {% for day_hits in day_hits %}
+        <tr>
+            <td> {{ day_hits.day }} </td>
             <td> {{ day_hits.ip2|length }} </td>
             <td> {{ day_hits.home }} </td>
             <td> {{ day_hits.patients }} </td>
-            <td> {{ day_hits.prj_landscape }} </td> -->
-        <!-- </tr> -->
-        <!-- {% endfor %} -->
+            <td> {{ day_hits.prj_landscape }} </td>
+        </tr>
+        {% endfor %}
       </table>
 {% endblock content %}

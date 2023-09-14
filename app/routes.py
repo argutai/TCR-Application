@@ -10,32 +10,35 @@ def get_current_day():
     return today.strftime("%Y-%m-%d") 
 
 #initialise
-# app.app_context().push()
-# db.create_all()
-# print("db created")
+try:
+    app.app_context().push()
+    db.create_all()
+    print("db created")
+except Exception as err:
+    print(f"DB Error: {err=}, {type(err)=}")
 
 def page_hit_to_db(page):
     print("do nothing")
-    # try:
-    #     day=get_current_day()
-    #     client_ip = request.remote_addr
+    try:
+        day=get_current_day()
+        client_ip = request.remote_addr
 
-    #     day_entry = Date.query.filter_by(day=day).first()
-    #     if not bool(day_entry):
-    #         day_entry = Date(day, 0, 0, 0)
-    #         db.session.add(day_entry)
-    #     setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
+        day_entry = Date.query.filter_by(day=day).first()
+        if not bool(day_entry):
+            day_entry = Date(day, 0, 0, 0)
+            db.session.add(day_entry)
+        setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
 
-    #     ip_entry = IpView.query.filter_by(ip=client_ip).first()
-    #     if not bool(ip_entry):
-    #         ip_entry = IpView(client_ip, day_entry.id)
-    #         db.session.add(ip_entry)
-    #     db.session.commit()
+        ip_entry = IpView.query.filter_by(ip=client_ip).first()
+        if not bool(ip_entry):
+            ip_entry = IpView(client_ip, day_entry.id)
+            db.session.add(ip_entry)
+        db.session.commit()
 
-    #     print(Date.query.all())
-    #     print(IpView.query.all())
-    # except Exception as err:
-    #     print(f"Error connecting to database: {err=}, {type(err)=}")
+        print(Date.query.all())
+        print(IpView.query.all())
+    except Exception as err:
+        print(f"Error connecting to database: {err=}, {type(err)=}")
 
 @app.route("/")
 @app.route("/home")
@@ -62,11 +65,11 @@ def patients():
     if(patient is None): patient = "        "
     return render_template('patients.html', patient_obj = patient_obj, patient_names = patient_names)
  
-# @app.route("/hits")
-# def hits():
-#     day_hits = "hi"
-#     # try:
-#     #     day_hits = Date.query.all() 
-#     # except Exception as e:
-#     #     day_hits = "hi"
-#     return render_template('hits.html', day_hits=day_hits)
+@app.route("/hits")
+def hits():
+    day_hits = "hi"
+    try:
+        day_hits = Date.query.all() 
+        return render_template('hits.html', day_hits=day_hits)
+    except Exception as err:
+        print(f"error creating hit page from db: {err=}, {type(err)=}")
