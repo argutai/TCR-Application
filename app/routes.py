@@ -5,6 +5,9 @@ from app import app, db
 from app.logic import posts, patient_names, patient_list
 import datetime
 import sys
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 def get_current_day():
     today = datetime.date.today()
@@ -16,6 +19,7 @@ try:
     db.create_all()
     print("db created")
 except Exception as err:
+    app.logger.info("DB error from db init")
     print(f"DB Error: {err=}, {type(err)=}", file=sys.stderr)
 
 def page_hit_to_db(page):
@@ -39,6 +43,7 @@ def page_hit_to_db(page):
         print(Date.query.all())
         print(IpView.query.all())
     except Exception as err:
+        app.logger.info("DB error from page_hit_to_db")
         print(f"Error connecting to database: {err=}, {type(err)=}", file=sys.stderr)
 
 @app.route("/")
@@ -73,4 +78,5 @@ def hits():
         day_hits = Date.query.all() 
         return render_template('hits.html', day_hits=day_hits)
     except Exception as err:
+        app.logger.info("DB error from hit route")
         print(f"error creating hit page from db: {err=}, {type(err)=}", file=sys.stderr)
