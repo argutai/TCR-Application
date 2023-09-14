@@ -4,6 +4,7 @@ from app.models import Date, IpView
 from app import app, db
 from app.logic import posts, patient_names, patient_list
 import datetime
+import os
  
 
 
@@ -15,24 +16,34 @@ def get_current_day():
 app.app_context().push()
 db.create_all()
 
+absolute_path = os.path.dirname(__file__)
+path = os.path.join(absolute_path, '../instance/site.db')
+x = os.path.isfile(path)
+
+print(path)
+print(x)
+
 def page_hit_to_db(page):
-    day=get_current_day()
-    client_ip = request.remote_addr
+    try:
+        day=get_current_day()
+        client_ip = request.remote_addr
 
-    day_entry = Date.query.filter_by(day=day).first()
-    if not bool(day_entry):
-        day_entry = Date(day, 0, 0, 0)
-        db.session.add(day_entry)
-    setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
+        day_entry = Date.query.filter_by(day=day).first()
+        if not bool(day_entry):
+            day_entry = Date(day, 0, 0, 0)
+            db.session.add(day_entry)
+        setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
 
-    ip_entry = IpView.query.filter_by(ip=client_ip).first()
-    if not bool(ip_entry):
-        ip_entry = IpView(client_ip, day_entry.id)
-        db.session.add(ip_entry)
-    db.session.commit()
+        ip_entry = IpView.query.filter_by(ip=client_ip).first()
+        if not bool(ip_entry):
+            ip_entry = IpView(client_ip, day_entry.id)
+            db.session.add(ip_entry)
+        db.session.commit()
 
-    print(Date.query.all())
-    print(IpView.query.all())
+        print(Date.query.all())
+        print(IpView.query.all())
+    except Exception as err:
+        print(f"Error connecting to database: {err=}, {type(err)=}")
 
 @app.route("/")
 @app.route("/home")
@@ -61,5 +72,8 @@ def patients():
  
 @app.route("/hits")
 def hits():
-    day_hits = Date.query.all() 
-    return render_template('hits.html', day_hits=day_hits) #, IpView=IpView)
+    try:
+        day_hits = Date.query.all() 
+    except Exception as e:
+        day_hits = "hi"
+    return render_template('hits.html', day_hits=day_hits)
