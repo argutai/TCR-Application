@@ -4,18 +4,15 @@ from app.models import Date, IpView
 from app import app, db
 from app.logic import posts, patient_names, patient_list
 import datetime
-import os
- 
-
 
 def get_current_day():
     today = datetime.date.today()
     return today.strftime("%Y-%m-%d") 
 
 #initialise
-app.app_context().push()
-db.create_all()
-print("db created")
+# app.app_context().push()
+# db.create_all()
+# print("db created")
 
 def page_hit_to_db(page):
     print("do nothing")
@@ -65,11 +62,11 @@ def patients():
     if(patient is None): patient = "        "
     return render_template('patients.html', patient_obj = patient_obj, patient_names = patient_names)
  
-@app.route("/hits")
-def hits():
-    day_hits = "hi"
-    # try:
-    #     day_hits = Date.query.all() 
-    # except Exception as e:
-    #     day_hits = "hi"
-    return render_template('hits.html', day_hits=day_hits)
+# @app.route("/hits")
+# def hits():
+#     day_hits = "hi"
+#     # try:
+#     #     day_hits = Date.query.all() 
+#     # except Exception as e:
+#     #     day_hits = "hi"
+#     return render_template('hits.html', day_hits=day_hits)

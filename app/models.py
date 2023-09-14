@@ -1,12 +1,9 @@
 from app import db
 
-
-    
 class IpView(db.Model):
     id = db.Column("id", db.Integer, primary_key=True) #, db.ForeignKey(date.id)
     date_id = db.Column('date_id', db.Integer, db.ForeignKey('date.id'))
     ip = db.Column("ip", db.String(20))
-    # dates = db.relationship('Date', backref='ip_diffname', lazy=True)
 
     def __init__(self, ip, date_id):
         self.ip = ip
@@ -18,12 +15,10 @@ class Date(db.Model):
     patients = db.Column('patients', db.String)
     home = db.Column('home', db.String)
     prj_landscape = db.Column('prj_landscape', db.String)
-    # ip_id = db.Column('ip_id', db.Integer, db.ForeignKey('ip_view.id'))
     ip2 = db.relationship('IpView', backref='date_diffname', lazy=True)
 
     def __init__(self, day, home, patients, prj_landscape):
         self.day = day
-        # self.ip_id = ip_id
         self.home = home
         self.patients = patients
         self.prj_landscape = prj_landscape
