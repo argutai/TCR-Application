@@ -15,35 +15,30 @@ def get_current_day():
 #initialise
 app.app_context().push()
 db.create_all()
-
-absolute_path = os.path.dirname(__file__)
-path = os.path.join(absolute_path, '../instance/site.db')
-x = os.path.isfile(path)
-
-print(path)
-print(x)
+print("db created")
 
 def page_hit_to_db(page):
-    try:
-        day=get_current_day()
-        client_ip = request.remote_addr
+    print("do nothing")
+    # try:
+    #     day=get_current_day()
+    #     client_ip = request.remote_addr
 
-        day_entry = Date.query.filter_by(day=day).first()
-        if not bool(day_entry):
-            day_entry = Date(day, 0, 0, 0)
-            db.session.add(day_entry)
-        setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
+    #     day_entry = Date.query.filter_by(day=day).first()
+    #     if not bool(day_entry):
+    #         day_entry = Date(day, 0, 0, 0)
+    #         db.session.add(day_entry)
+    #     setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
 
-        ip_entry = IpView.query.filter_by(ip=client_ip).first()
-        if not bool(ip_entry):
-            ip_entry = IpView(client_ip, day_entry.id)
-            db.session.add(ip_entry)
-        db.session.commit()
+    #     ip_entry = IpView.query.filter_by(ip=client_ip).first()
+    #     if not bool(ip_entry):
+    #         ip_entry = IpView(client_ip, day_entry.id)
+    #         db.session.add(ip_entry)
+    #     db.session.commit()
 
-        print(Date.query.all())
-        print(IpView.query.all())
-    except Exception as err:
-        print(f"Error connecting to database: {err=}, {type(err)=}")
+    #     print(Date.query.all())
+    #     print(IpView.query.all())
+    # except Exception as err:
+    #     print(f"Error connecting to database: {err=}, {type(err)=}")
 
 @app.route("/")
 @app.route("/home")
@@ -72,8 +67,9 @@ def patients():
  
 @app.route("/hits")
 def hits():
-    try:
-        day_hits = Date.query.all() 
-    except Exception as e:
-        day_hits = "hi"
+    day_hits = "hi"
+    # try:
+    #     day_hits = Date.query.all() 
+    # except Exception as e:
+    #     day_hits = "hi"
     return render_template('hits.html', day_hits=day_hits)
