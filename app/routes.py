@@ -18,9 +18,9 @@ def get_current_day():
 try:
     app.app_context().push()
     db.create_all()
-    print("db created")
-except Exception as err:
-    app.logger.info("DB error from db init" + err)
+    app.logger.info("DB created")
+except Exception:
+    app.logger.info("DB error from db init")
 
 def page_hit_to_db(page):
     try:
@@ -33,15 +33,12 @@ def page_hit_to_db(page):
             db.session.add(day_entry)
         setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
 
-        ip_entry = IpView.query.filter_by(ip=client_ip).first()
+        ip_entry = IpView.query.filter_by(ip=client_ip, date=day).first()
         if not bool(ip_entry):
-            ip_entry = IpView(client_ip, day_entry.id)
+            ip_entry = IpView(client_ip, day_entry.id, day)
             db.session.add(ip_entry)
         db.session.commit()
-
-        print(Date.query.all())
-        print(IpView.query.all())
-    except Exception as err:
+    except Exception:
         app.logger.info("DB error from page_hit_to_db")
 
 @app.route("/")
@@ -71,9 +68,8 @@ def patients():
  
 @app.route("/hits")
 def hits():
-    day_hits = "hi"
     try:
-        day_hits = Date.query.all() 
+        day_hits = Date.query.all()
         return render_template('hits.html', day_hits=day_hits)
-    except Exception as err:
+    except Exception:
         app.logger.info("DB error from hit route")
