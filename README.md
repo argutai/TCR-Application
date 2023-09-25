@@ -17,7 +17,7 @@ comment line in [flaskapp.py](http://flaskapp.py) `app.run(debug=True, host="10.
 
 ### Steps for updating deployment
 
-Project name: **er_prj_tcr_analytics**. Request access from argutai@hotmail.com. The name of the VM instance is TCR-Analytics which has an IP address [10.211.116.43](mailto:ubuntu@10.211.116.43). 
+Project name: **er_prj_tcr_analytics**. Request access from argutai. The name of the VM instance is TCR-Analytics which has an IP address [10.211.116.43](mailto:ubuntu@10.211.116.43). 
 
 Connecting to VM from local requires King’s VPN. Install Tunnelblick. Follow steps on https://docs.er.kcl.ac.uk/CREATE/tools/openvpn/ to create an OpenVPN certificate to connect to VPN. Once configured, `ssh` into VM with
 

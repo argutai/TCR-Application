@@ -1,15 +1,35 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>{{ title }}</h1>
-    {% for post in posts %}
-        <div>
-            <div>
-              <img src="{{ post.image_path }}" width="500" height="400">
-              <div class="media-body">
-                <h3>{{ post.graph_name }}</h3>
-                <p class="text-secondary">{{ post.legend }}</p>
-              </div>
-            </div>
-          </div>
-    {% endfor %}
+<center>
+  <h3>All samples comparison</h3>
+</center>
+<article class="media content-section">
+  <div class="media-body">    
+  <form class="form-inline" method="POST" action="{{ url_for('overview') }}">
+    <div class="form-group">
+      <div class="input-group">
+          <span class="input-group-addon"></span>
+              <select name="colour_by_select" class="selectpicker form-control">
+                <option value="bubble_overlay" selected disabled hidden>Colour by...</option>
+                <option value="bubble_overlay_EI">expansion index</option>
+                <option value="bubble_overlay_TCT">T cell total</option>
+              </select>
+      </div>
+      <button type="submit" class="btn btn-default">Go</button>
+    </div>
+  </form>
+  <div class="media-body">
+  <h1> </h1>
+  <h4 class="text-secondary">Bubble charts</h4>
+  <img style="width: 100%;" src="static/KCL-content/figures/expansion_index/{{ colour_by }}.svg">
+
+  <!-- <article class="media content-section">
+    <div class="media-body">   
+      <p class="text-secondary">Bubble overlay</p>
+      <form method="POST" action="{{ url_for('overview') }}">
+        <textarea id="legend" name="legend">{{ legend }}</textarea>
+        <br>
+        <input type="submit" value="Save changes">
+      </form>
+  </article> -->
 {% endblock content %}

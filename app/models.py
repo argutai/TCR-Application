@@ -10,7 +10,7 @@ class IpView(db.Model):
         self.ip = ip
         self.date_id = date_id
         self.date = date
-
+ 
 class Date(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     day = db.Column('day', db.String)
@@ -25,11 +25,11 @@ class Date(db.Model):
         self.patients = patients
         self.prj_landscape = prj_landscape
 
-# >>> from app import app, db
-# >>> app.app_context().push()
-# >>> db.create_all()
-# >>> from app.models import Hit
-# >>> new_IP = Hit(IP_address='1.00.390.98', Date='2023-09-11')
-# >>> db.session.add(new_IP)
-# >>> Hit.query.all() 
-# >>> db.drop_all() # clears all data from db
+class Overview_legend(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    legend = db.Column('legend', db.String)
+    colour_by = db.Column('colour_by', db.String)
+    def __init__(self, legend, colour_by):
+        self.legend = legend
+        self.colour_by = colour_by
+         

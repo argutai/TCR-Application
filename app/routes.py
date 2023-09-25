@@ -1,18 +1,16 @@
-
+   
 from flask import render_template, request
-from app.models import Date, IpView
+from app.models import Date, IpView, Overview_legend
 from app import app, db
-from app.logic import posts, patient_names, patient_list
+from app.logic import patient_names, patient_list
 import datetime
-import sys, os
 import logging
-import sqlite3
 
 logging.basicConfig(level=logging.DEBUG)
 
 def get_current_day():
     today = datetime.date.today()
-    return today.strftime("%Y-%m-%d") 
+    return today.strftime("%Y-%m-%d")
 
 #initialise
 try:
@@ -41,31 +39,54 @@ def page_hit_to_db(page):
     except Exception:
         app.logger.info("DB error from page_hit_to_db")
 
+def add_edit(entry, colour_by):
+    legend = Overview_legend(entry, colour_by)
+    db.session.add(legend)
+    db.session.commit()
+
 @app.route("/")
 @app.route("/home")
 def home():
     page_hit_to_db('home')
     return render_template('home.html', title='TCR Analysis Home')
 
-@app.route("/overview")
+@app.route("/overview", methods=['GET', 'POST'])
 def overview():
-    return render_template('overview.html', posts=posts, title='Overview')
+    colour_by = request.form.get('colour_by_select')
+    entry = request.form.get('legend')
+
+
+    try:
+        legend_obj = list(Overview_legend.query.filter_by(colour_by=colour_by))[-1]
+        legend = legend_obj.legend
+        colour_by = legend_obj.colour_by
+        print("IT CHANGED COLOUR_BY")
+        print(legend_obj.colour_by)
+    except:
+        legend = "No legend yet"
+    if colour_by is None:
+        colour_by = "bubble_overlay"
+    if not entry == None:
+        add_edit(entry, colour_by)
+
+    print("colour_by: " + str(colour_by))
+    return render_template('overview.html', colour_by=colour_by, legend=legend)
 
 @app.route("/cb-project-landscape")
 def project_landscape():
     page_hit_to_db('prj_landscape')
     return render_template('project-landscape.html')
- 
+
 @app.route("/patients", methods=['GET', 'POST'])
 def patients():
     page_hit_to_db('patients')
 
-    patient = request.form.get('comp_select')
+    patient = request.form.get('patient_select')
     patient_obj = [] # needs an initialised value ...
     if(patient is not None): patient_obj = [patient_list[patient_names.index(patient)]]
     if(patient is None): patient = "        "
     return render_template('patients.html', patient_obj = patient_obj, patient_names = patient_names)
- 
+
 @app.route("/hits")
 def hits():
     try:
