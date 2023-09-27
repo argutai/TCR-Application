@@ -7,3 +7,4 @@ app/static/KCL-content/
 __pycache__
 .DS_Store
 app/.DS_Store
+app/__init__.py.save
