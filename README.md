@@ -13,7 +13,7 @@ Clone repo. Install dependencies:
 - python, pip
 - Pip install flask, pandas, os, flask_sqlalchemy
 
-comment line in [flaskapp.py](http://flaskapp.py) `app.run(debug=True, host="10.211.116.43", port=443)`, and uncomment `app.run(debug=True)` - this will deploy to your [localhost:5000](http://localhost:5000) instead of the KCL-hosted server. Run `python flaskapp.py`, and connect to localhost:5000 on browser.
+From root directory, run `python flaskapp.py`, and connect to [localhost:5000](http://localhost:5000) on browser.
 
 ### Steps for updating deployment
 
@@ -38,37 +38,22 @@ Once successfully signed in, you should see this git repository in the root dire
     │   └── static/
     │       ├── KCL-content/
     │       │   ├── figures/
-    │       │   │   ├── Sample_bubbles/
-    │       │   │   ├── Sample_expanded_heatmaps/
-    │       │   │   ├── clonotype_count/
-    │       │   │   └── clonotype_proportions/
     │       │   └── metadata/
-    │       │       └── metadata.txt
     │       ├── main.css
     │       └── templates/
-    │           ├── layout.html
-    │           ├── home.html
-    │           ├── overview.html
-    │           └── patients.html
     ├── flaskapp.py
-    ├── flaskapp.wsgi
-    └── instance
+    └── flaskapp.wsgi
 ```
 
-To update the application after changes to this repository, `cd flaskapp`, and `git pull`. To update the content after update to analytical content (KCL-content), you will need to update the git submodule which points to a separate private repository: 
+To update the application after changes to this repository, `cd flaskapp` and run: 
 
 ```
-git submodule update --init --recursive
-git submodule update --recursive --remote
+bash ./operations/deploy.sh
 ```
 
-To actualise any changes to code to deployment, you will need to reload Apache:
+This will pull the latest version of the TCR app and update the git submodule containing all of the content and figures. It then reloads apache to actualise the changes and sends a HTTP request to the server to check if it is working as expected. If you receive an error, debug with:
 
-```bash
-sudo systemctl reload apache2
-curl https://localhost:443 --insecure
-
-# To debug:
+```
 sudo systemctl status apache2.service
 cat /var/log/apache2/error.log
 ```
