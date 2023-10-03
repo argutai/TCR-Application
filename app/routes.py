@@ -2,7 +2,7 @@
 from flask import render_template, request
 from app.models import Date, IpView, Overview_legend
 from app import app, db
-from app.logic import patient_names, patient_list
+from app.logic import patient_names, patient_list, fig_list
 import datetime
 import logging
 
@@ -52,25 +52,25 @@ def home():
 
 @app.route("/overview", methods=['GET', 'POST'])
 def overview():
-    colour_by = request.form.get('colour_by_select')
-    entry = request.form.get('legend')
+    file_name = request.form.get('colour_by_select')
+    if file_name is None:
+        file_name = 'bubble_overlay'
+    fig = [fig for fig in fig_list if fig.file_name == file_name][0]
+    print(fig)
 
-
-    try:
-        legend_obj = list(Overview_legend.query.filter_by(colour_by=colour_by))[-1]
-        legend = legend_obj.legend
-        colour_by = legend_obj.colour_by
-        print("IT CHANGED COLOUR_BY")
-        print(legend_obj.colour_by)
-    except:
-        legend = "No legend yet"
-    if colour_by is None:
-        colour_by = "bubble_overlay"
-    if not entry == None:
-        add_edit(entry, colour_by)
-
-    print("colour_by: " + str(colour_by))
-    return render_template('overview.html', colour_by=colour_by, legend=legend)
+    # entry = request.form.get('legend')
+    # try:
+    #     legend_obj = list(Overview_legend.query.filter_by(colour_by=colour_by))[-1]
+    #     legend = legend_obj.legend
+    #     colour_by = legend_obj.colour_by
+    # except:
+    #     legend = "No legend yet"
+    # if colour_by is None:
+    #     colour_by = "bubble_overlay"
+    # if not entry == None:
+    #     add_edit(entry, colour_by)
+ 
+    return render_template('overview.html', fig=fig, fig_list=fig_list)
 
 @app.route("/cb-project-landscape")
 def project_landscape():
