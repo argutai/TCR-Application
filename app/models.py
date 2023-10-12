@@ -15,14 +15,16 @@ class Date(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     day = db.Column('day', db.String)
     patients = db.Column('patients', db.String)
+    bulkRNA = db.Column('bulkRNA', db.String)
     home = db.Column('home', db.String)
     prj_landscape = db.Column('prj_landscape', db.String)
     ip2 = db.relationship('IpView', backref='date_diffname', lazy=True)
 
-    def __init__(self, day, home, patients, prj_landscape):
+    def __init__(self, day, home, patients, bulkRNA, prj_landscape):
         self.day = day
         self.home = home
         self.patients = patients
+        self.bulkRNA = bulkRNA
         self.prj_landscape = prj_landscape
 
 class Overview_legend(db.Model):

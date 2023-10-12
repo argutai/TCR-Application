@@ -1,6 +1,7 @@
    
 from flask import render_template, request
 from app.models import Date, IpView, Overview_legend
+from app.render_doc import docx_as_html
 from app import app, db
 from app.logic import patient_names, patient_list, fig_list
 import datetime
@@ -27,7 +28,7 @@ def page_hit_to_db(page):
 
         day_entry = Date.query.filter_by(day=day).first()
         if not bool(day_entry):
-            day_entry = Date(day, 0, 0, 0)
+            day_entry = Date(day, 0, 0, 0, 0)
             db.session.add(day_entry)
         setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
 
@@ -39,10 +40,10 @@ def page_hit_to_db(page):
     except Exception:
         app.logger.info("DB error from page_hit_to_db")
 
-def add_edit(entry, colour_by):
-    legend = Overview_legend(entry, colour_by)
-    db.session.add(legend)
-    db.session.commit()
+# def add_edit(entry, colour_by):
+#     legend = Overview_legend(entry, colour_by)
+#     db.session.add(legend)
+#     db.session.commit()
 
 @app.route("/")
 @app.route("/home")
@@ -50,8 +51,14 @@ def home():
     page_hit_to_db('home')
     return render_template('home.html', title='TCR Analysis Home')
 
-@app.route("/overview", methods=['GET', 'POST'])
-def overview():
+@app.route("/doc-of-truth")
+def doc_of_truth():
+    docx_as_html()
+    return render_template('TCR-doc-of-truth.html')  
+
+@app.route("/bulkRNA", methods=['GET', 'POST'])
+def bulkRNA():    
+    page_hit_to_db('bulkRNA')
     file_name = request.form.get('colour_by_select')
     if file_name is None:
         file_name = 'bubble_overlay'
@@ -70,8 +77,8 @@ def overview():
     # if not entry == None:
     #     add_edit(entry, colour_by)
  
-    return render_template('overview.html', fig=fig, fig_list=fig_list)
-
+    return render_template('bulkRNA.html', fig=fig, fig_list=fig_list)
+ 
 @app.route("/cb-project-landscape")
 def project_landscape():
     page_hit_to_db('prj_landscape')
@@ -93,4 +100,4 @@ def hits():
         day_hits = Date.query.all()
         return render_template('hits.html', day_hits=day_hits)
     except Exception:
-        app.logger.info("DB error from hit route")
+        app.logger.info("DB error from hit route")  
