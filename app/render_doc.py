@@ -25,16 +25,18 @@ def docx_as_html():
 
     with open(doc_dest, "rb") as docx_file:
         result = mammoth.convert_to_html(docx_file)
-    with open(html_dest, "w") as html_file:
-        html_file.write(result.value)
 
-    line = '{% extends "layout.html" %} {% block content %}'
-    with open(html_dest, 'r+') as html_file:
-        content = html_file.read()
-        html_file.seek(0, 0)
-        html_file.write(line.rstrip('\r\n') + '\n' + content)
+    return(result.value)
+    # with open(html_dest, "w") as html_file:
+    #     html_file.write(result.value)
 
-    print("TRYNA WRITE")
-    with open(html_dest, "a") as html_file:
-        html_file.write("{% endblock content %}")
+    # line = '{% extends "layout.html" %} {% block content %}'
+    # with open(html_dest, 'r+') as html_file:
+    #     content = html_file.read()
+    #     html_file.seek(0, 0)
+    #     html_file.write(line.rstrip('\r\n') + '\n' + content)
+
+    # print("TRYNA WRITE")
+    # with open(html_dest, "a") as html_file:
+    #     html_file.write("{% endblock content %}")
     
