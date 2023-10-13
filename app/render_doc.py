@@ -12,7 +12,7 @@ def docx_as_html():
 
     url = "https://emckclac.sharepoint.com/sites/MT-CCC-CB"
     username = "k2367592@kcl.ac.uk"
-    password = ""
+    password = "Babyruiz122!"
     relative_url = '/sites/MT-CCC-CB/Shared%20Documents/Shared/TCR-doc-of-truth.docx'
 
     ctx_auth = AuthenticationContext(url)
@@ -26,14 +26,8 @@ def docx_as_html():
     with open(doc_dest, "rb") as docx_file:
         result = mammoth.convert_to_html(docx_file)
 
+    link = '<a href="https://emckclac.sharepoint.com/:w:/s/MT-CCC-CB/EQwPPVahenlEqKSQvxFIUawBmA_n9rXgBDEslKcEKua4Tg?e=49i7BL" target="_blank">Click here to edit shared document</a>'
+    content = '{% extends "layout.html" %} {% block content %}' + link + result.value + "{% endblock content %}"
+
     with open(html_dest, "wb") as html_file:
-        html_file.write(result.value.encode('utf8'))
-
-    line = '{% extends "layout.html" %} {% block content %}'
-    with open(html_dest, 'r+') as html_file:
-        content = html_file.read()
-        html_file.seek(0, 0)
-        html_file.write(line.rstrip('\r\n') + '\n' + content)
-
-    with open(html_dest, "a") as html_file:
-        html_file.write("{% endblock content %}")
+        html_file.write(content.encode('utf8'))

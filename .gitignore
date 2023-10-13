@@ -8,3 +8,5 @@ __pycache__
 .DS_Store
 app/.DS_Store
 app/__init__.py.save
+app/TCR-doc-of-truth.docx
+app/templates/TCR-doc-of-truth.html

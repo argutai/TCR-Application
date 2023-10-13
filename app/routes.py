@@ -6,12 +6,6 @@ from app import app, db
 from app.logic import patient_names, patient_list, fig_list
 import datetime
 import logging
-from office365.runtime.auth.authentication_context import AuthenticationContext
-from office365.sharepoint.client_context import ClientContext
-from office365.sharepoint.files.file import File
-import mammoth
-import os
-
 
 logging.basicConfig(level=logging.DEBUG)
 
