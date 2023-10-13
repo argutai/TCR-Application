@@ -26,9 +26,7 @@ def docx_as_html():
     with open(doc_dest, "rb") as docx_file:
         result = mammoth.convert_to_html(docx_file)
 
-    with open(html_dest, 'wb') as local_file:
-        local_file.write(result.value)
-    
+    print(result.value)
     # with open(html_dest, "w") as html_file:
     #     html_file.write(result.value)
 

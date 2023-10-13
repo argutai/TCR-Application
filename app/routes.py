@@ -53,9 +53,8 @@ def home():
 
 @app.route("/doc-of-truth")
 def doc_of_truth():
-    x = docx_as_html()
-    print(x)
-    return render_template(x)  
+    docx_as_html()
+    return render_template('layout.html')  
 
 @app.route("/bulkRNA", methods=['GET', 'POST'])
 def bulkRNA():    
