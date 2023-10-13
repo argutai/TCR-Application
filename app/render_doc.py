@@ -6,7 +6,6 @@ import os
 
 
 def docx_as_html():
-
     path = os.path.dirname(__file__)
     doc_dest = os.path.join(path, 'TCR-doc-of-truth.docx')
     html_dest = os.path.join(path, 'templates/TCR-doc-of-truth.html')
@@ -20,23 +19,21 @@ def docx_as_html():
     ctx_auth.acquire_token_for_user(username, password)   
     ctx = ClientContext(url, ctx_auth)
     response = File.open_binary(ctx, relative_url)
+
     with open(doc_dest, 'wb') as local_file:
         local_file.write(response.content)
 
     with open(doc_dest, "rb") as docx_file:
         result = mammoth.convert_to_html(docx_file)
 
-    print(result.value)
-    # with open(html_dest, "w") as html_file:
-    #     html_file.write(result.value)
+    with open(html_dest, "wb") as html_file:
+        html_file.write(result.value.encode('utf8'))
 
-    # line = '{% extends "layout.html" %} {% block content %}'
-    # with open(html_dest, 'r+') as html_file:
-    #     content = html_file.read()
-    #     html_file.seek(0, 0)
-    #     html_file.write(line.rstrip('\r\n') + '\n' + content)
+    line = '{% extends "layout.html" %} {% block content %}'
+    with open(html_dest, 'r+') as html_file:
+        content = html_file.read()
+        html_file.seek(0, 0)
+        html_file.write(line.rstrip('\r\n') + '\n' + content)
 
-    # print("TRYNA WRITE")
-    # with open(html_dest, "a") as html_file:
-    #     html_file.write("{% endblock content %}")
-    
+    with open(html_dest, "a") as html_file:
+        html_file.write("{% endblock content %}")

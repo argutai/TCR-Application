@@ -59,35 +59,8 @@ def home():
 
 @app.route("/doc-of-truth")
 def doc_of_truth():
-    path = os.path.dirname(__file__)
-    doc_dest = os.path.join(path, 'TCR-doc-of-truth.docx')
-    html_dest = os.path.join(path, 'templates/TCR-doc-of-truth.html')
-
-    url = "https://emckclac.sharepoint.com/sites/MT-CCC-CB"
-    username = "k2367592@kcl.ac.uk"
-    password = ""
-    relative_url = '/sites/MT-CCC-CB/Shared%20Documents/Shared/TCR-doc-of-truth.docx'
-
-    ctx_auth = AuthenticationContext(url)
-    ctx_auth.acquire_token_for_user(username, password)   
-    ctx = ClientContext(url, ctx_auth)
-    response = File.open_binary(ctx, relative_url)
-
-    print("CHECK 0 !!!!!!!!!!!!")
-
-    with open(doc_dest, 'wb') as local_file:
-        local_file.write(response.content)
-    print("CHECK 1 !!!!!!!!!!!!")
-
-    with open(doc_dest, "rb") as docx_file:
-        result = mammoth.convert_to_html(docx_file)
-    print("CHECK 2 !!!!!!!!!!!!")
-
-    with open(html_dest, "w") as html_file:
-        html_file.write(result.value)
-    print("CHECK 3 !!!!!!!!!!!!")
-
-    return render_template('layout.html')  
+    docx_as_html()
+    return render_template('TCR-doc-of-truth.html')  
 
 @app.route("/bulkRNA", methods=['GET', 'POST'])
 def bulkRNA():    
