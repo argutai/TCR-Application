@@ -63,21 +63,12 @@ def bulkRNA():
     if file_name is None:
         file_name = 'bubble_overlay'
     fig = [fig for fig in fig_list if fig.file_name == file_name][0]
-    print(fig)
-
-    # entry = request.form.get('legend')
-    # try:
-    #     legend_obj = list(Overview_legend.query.filter_by(colour_by=colour_by))[-1]
-    #     legend = legend_obj.legend
-    #     colour_by = legend_obj.colour_by
-    # except:
-    #     legend = "No legend yet"
-    # if colour_by is None:
-    #     colour_by = "bubble_overlay"
-    # if not entry == None:
-    #     add_edit(entry, colour_by)
  
     return render_template('bulkRNA.html', fig=fig, fig_list=fig_list)
+
+@app.route("/motifs", methods=['GET', 'POST'])
+def motifs():    
+    return render_template('motifs.html') 
  
 @app.route("/cb-project-landscape")
 def project_landscape():
