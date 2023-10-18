@@ -8,7 +8,7 @@
           <th>Home</th>
           <th>Patients</th>
           <th>bulkRNA</th>
-          <th>Projects</th>
+          <th>motifs</th>
         </tr>
         {% for day_hits in day_hits %}
         <tr>
@@ -17,7 +17,7 @@
             <td> {{ day_hits.home }} </td>
             <td> {{ day_hits.patients }} </td>
             <td> {{ day_hits.bulkRNA }} </td>
-            <td> {{ day_hits.prj_landscape }} </td>
+            <td> {{ day_hits.motifs }} </td>
         </tr>
         {% endfor %}
       </table>

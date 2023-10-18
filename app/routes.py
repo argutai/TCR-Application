@@ -67,7 +67,8 @@ def bulkRNA():
     return render_template('bulkRNA.html', fig=fig, fig_list=fig_list)
 
 @app.route("/motifs", methods=['GET', 'POST'])
-def motifs():    
+def motifs():   
+    page_hit_to_db('motifs')
     return render_template('motifs.html') 
  
 @app.route("/cb-project-landscape")
