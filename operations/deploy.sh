@@ -1,10 +1,18 @@
 #!/bin/bash
+username=$1
+password=$2
+
+
 git stash
 git submodule foreach 'git stash'
 git pull
 git submodule update --init --recursive
 git submodule update --recursive --remote
 sudo systemctl reload apache2
+
+sed -i.bak "s/^    username = .*/    username = \"$username\"/g" 'app/render_doc.py'
+sed -i.bak "s/^    password = .*/    password = \"$password\"/g" 'app/render_doc.py'
+rm 'app/render_doc.py.bak'
 
 query=$(curl https://localhost:443 --insecure)
 SUB='TCR Analysis Home'
