@@ -11,7 +11,7 @@ def docx_as_html():
     html_dest = os.path.join(path, 'templates/TCR-doc-of-truth.html')
 
     url = "https://emckclac.sharepoint.com/sites/MT-CCC-CB"
-    username = "k2367592@kcl.ac.uk"
+    username = ""
     password = ""
     relative_url = '/sites/MT-CCC-CB/Shared%20Documents/Shared/TCR-doc-of-truth.docx'
 
