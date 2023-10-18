@@ -48,10 +48,10 @@ Once successfully signed in, you should see this git repository in the root dire
 To update the application after changes to this repository, `cd flaskapp` and run: 
 
 ```
-bash ./operations/deploy.sh
+bash ./operations/deploy.sh <KCL-email-address> <password>
 ```
 
-This will pull the latest version of the TCR app and update the git submodule containing all of the content and figures. It then reloads apache to actualise the changes and sends a HTTP request to the server to check if it is working as expected. If you receive an error, debug with:
+This will pull the latest version of the TCR app and update the git submodule containing all of the content and figures. It then reloads apache to actualise the changes and sends a HTTP request to the server to check if it is working as expected. You must enter an email and password for the documentation page to work correctly as it automatically updates from a word document on sharepoint. If you receive an error, debug with:
 
 ```
 sudo systemctl status apache2.service
