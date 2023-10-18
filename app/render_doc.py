@@ -12,7 +12,7 @@ def docx_as_html():
 
     url = "https://emckclac.sharepoint.com/sites/MT-CCC-CB"
     username = "k2367592@kcl.ac.uk"
-    password = "Babyruiz122!"
+    password = ""
     relative_url = '/sites/MT-CCC-CB/Shared%20Documents/Shared/TCR-doc-of-truth.docx'
 
     ctx_auth = AuthenticationContext(url)
