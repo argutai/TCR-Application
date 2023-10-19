@@ -10,6 +10,9 @@ class IpView(db.Model):
         self.ip = ip
         self.date_id = date_id
         self.date = date
+
+    def __repr__(self):
+        return self.ip
  
 class Date(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
