@@ -53,6 +53,7 @@ def home():
 
 @app.route("/doc-of-truth")
 def doc_of_truth():
+    page_hit_to_db('docs')
     docx_as_html()
     return render_template('TCR-doc-of-truth.html')  
 

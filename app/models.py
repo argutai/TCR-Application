@@ -17,12 +17,14 @@ class Date(db.Model):
     patients = db.Column('patients', db.String)
     bulkRNA = db.Column('bulkRNA', db.String)
     home = db.Column('home', db.String)
+    docs = db.Column('docs', db.String)
     motifs = db.Column('motifs', db.String)
     ip2 = db.relationship('IpView', backref='date_diffname', lazy=True)
 
-    def __init__(self, day, home, patients, bulkRNA, motifs):
+    def __init__(self, day, home, docs, patients, bulkRNA, motifs):
         self.day = day
         self.home = home
+        self.docs = docs
         self.patients = patients
         self.bulkRNA = bulkRNA
         self.motifs = motifs
@@ -34,4 +36,4 @@ class Overview_legend(db.Model):
     def __init__(self, legend, colour_by):
         self.legend = legend
         self.colour_by = colour_by
-         
+          
