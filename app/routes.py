@@ -28,7 +28,7 @@ def page_hit_to_db(page):
 
         day_entry = Date.query.filter_by(day=day).first()
         if not bool(day_entry):
-            day_entry = Date(day, 0, 0, 0, 0)
+            day_entry = Date(day, 0, 0, 0, 0, 0)
             db.session.add(day_entry)
         setattr(day_entry,page, int(getattr(day_entry,page)) + 1)
 
