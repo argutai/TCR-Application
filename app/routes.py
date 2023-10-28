@@ -40,11 +40,6 @@ def page_hit_to_db(page):
     except Exception:
         app.logger.info("DB error from page_hit_to_db")
 
-# def add_edit(entry, colour_by):
-#     legend = Overview_legend(entry, colour_by)
-#     db.session.add(legend)
-#     db.session.commit()
-
 @app.route("/")
 @app.route("/home")
 def home():
@@ -66,6 +61,13 @@ def bulkRNA():
     fig = [fig for fig in fig_list if fig.file_name == file_name][0]
  
     return render_template('bulkRNA.html', fig=fig, fig_list=fig_list)
+
+@app.route("/TCRord", methods=['GET', 'POST'])
+def TCRord():    
+    file_name = request.form.get('colour_by_select')
+    if file_name is None:
+        file_name = 'none'
+    return render_template('TCRord.html', file_name=file_name)
 
 @app.route("/motifs", methods=['GET', 'POST'])
 def motifs():   
