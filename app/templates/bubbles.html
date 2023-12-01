@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
 <center>
-  <h3>All samples comparison</h3>
+  <h1>All samples comparison</h1>
 </center>
 <article class="media content-section">
   <div class="media-body">    
-  <form class="form-inline" method="POST" action="{{ url_for('bulkRNA') }}">
+  <form class="form-inline" method="POST" action="{{ url_for('bubbles') }}">
     <div class="form-group">
       <div class="input-group">
           <span class="input-group-addon"></span>
@@ -28,14 +28,4 @@
     <div class="media-body">   
       <p class="text-secondary">{{ fig.legend }}</p>
   </article>
-
-<!-- <article class="media content-section">
-    <div class="media-body">   
-      <p class="text-secondary">Bubble overlay</p>
-      <form method="POST" action="{{ url_for('bulkRNA') }}">
-        <textarea id="legend" name="legend">{{ legend }}</textarea>
-        <br>
-        <input type="submit" value="Save changes">
-      </form>
-  </article> -->
 {% endblock content %}

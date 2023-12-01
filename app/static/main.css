@@ -1,3 +1,21 @@
+
+
+#photoArray {
+    display: grid;
+    grid-gap: .5em;
+    grid-template-areas:
+      "1 2 3 4 5";
+    grid-template-columns: 20% 20% 20% 20% 20%
+  }
+
+  #photoArray > div {
+    border: 2px solic #e3e3e3
+  }
+  
+  p3, h2, h3, h4, h5, h6 {
+    font-size: smaller;
+  }
+  
   body {
     background: #fafafa;
     color: #333333;

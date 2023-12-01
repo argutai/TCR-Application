@@ -1,11 +1,13 @@
    
-from flask import render_template, request
+from flask import render_template, request, render_template_string
 from app.models import Date, IpView, Overview_legend
 from app.render_doc import docx_as_html
 from app import app, db
-from app.logic import patient_names, patient_list, fig_list
+from app.logic import fig_list, autoSampleList, filter_attributes
 import datetime
 import logging
+import pandas as pd
+import os
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -52,42 +54,47 @@ def doc_of_truth():
     docx_as_html()
     return render_template('TCR-doc-of-truth.html')  
 
-@app.route("/bulkRNA", methods=['GET', 'POST'])
-def bulkRNA():    
-    page_hit_to_db('bulkRNA')
+@app.route("/bubbles", methods=['GET', 'POST'])
+def bubbles():    
+    page_hit_to_db('bubbles')
     file_name = request.form.get('colour_by_select')
     if file_name is None:
         file_name = 'bubble_overlay'
     fig = [fig for fig in fig_list if fig.file_name == file_name][0]
  
-    return render_template('bulkRNA.html', fig=fig, fig_list=fig_list)
+    return render_template('bubbles.html', fig=fig, fig_list=fig_list)
 
-@app.route("/TCRord", methods=['GET', 'POST'])
-def TCRord():    
+@app.route("/TCRdist", methods=['GET', 'POST'])
+def TCRdist():    
     file_name = request.form.get('colour_by_select')
     if file_name is None:
         file_name = 'none'
-    return render_template('TCRord.html', file_name=file_name)
+    return render_template('TCRdist.html', file_name=file_name)
 
-@app.route("/motifs", methods=['GET', 'POST'])
-def motifs():   
-    page_hit_to_db('motifs')
-    return render_template('motifs.html') 
- 
-@app.route("/cb-project-landscape")
-def project_landscape():
-    page_hit_to_db('prj_landscape')
-    return render_template('project-landscape.html')
+@app.route("/library", methods=['GET', 'POST'])
+def library(): 
+    # Define attribute to filter by - any column from metadata
+    filtered_sample_list = autoSampleList; search_query = []
+    
+    dictionary = {}
+    for attribute in filter_attributes:
+        dictionary[attribute] = list(set(getattr(fsample, attribute) for fsample in autoSampleList))
+        filter = request.form.get(attribute)
+        if filter is not None:
+            search_query.append(filter)
+            filtered_sample_list = [fsample for fsample in filtered_sample_list if getattr(fsample, attribute) == filter]
 
-@app.route("/patients", methods=['GET', 'POST'])
-def patients():
-    page_hit_to_db('patients')
-
-    patient = request.form.get('patient_select')
-    patient_obj = [] # needs an initialised value ...
-    if(patient is not None): patient_obj = [patient_list[patient_names.index(patient)]]
-    if(patient is None): patient = "        "
-    return render_template('patients.html', patient_obj = patient_obj, patient_names = patient_names)
+    search_query = ', '.join(search_query)
+    return render_template('library.html', search_query=search_query, filtered_sample_list=filtered_sample_list, dictionary=dictionary)
+   
+@app.route("/sample", methods=['GET', 'POST'])
+def sample():
+    sample_name = request.form.get('sample_button')
+    sample = [sample for sample in autoSampleList if sample.id == sample_name ][0]
+    absolute_path = os.path.dirname(__file__)
+    file = os.path.join(absolute_path, 'static/KCL-content/summary_stats/' + sample.id + '.tsv')
+    df = pd.read_csv(file, delimiter='\t')
+    return render_template('sample.html', sample = sample, df=df, table_len=len(df))
 
 @app.route("/hits")
 def hits():
@@ -95,4 +102,4 @@ def hits():
         day_hits = Date.query.all()
         return render_template('hits.html', day_hits=day_hits)
     except Exception:
-        app.logger.info("DB error from hit route")  
+        app.logger.info("DB error from hit route")   

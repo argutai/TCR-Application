@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
 <center>
-  <h3>TCRdist ordination</h3>
+  <h1>TCRdist</h1>
 </center>
 <article class="media content-section">
   <div class="media-body">    
-  <form class="form-inline" method="POST" action="{{ url_for('TCRord') }}">
+  <form class="form-inline" method="POST" action="{{ url_for('TCRdist') }}">
     <div class="form-group">
       <div class="input-group">
           <span class="input-group-addon"></span>
@@ -27,12 +27,21 @@
     </div>
   </form>
   <div class="media-body">
-  <h1> </h1>
+  <br>
   <img style="width: 100%; max-height: 600px" src="static/KCL-content/figures/ordinations/{{ file_name }}.png">
   </div>
-</article>
-<article class="media content-section">
+  <br>
   <div class="media-body">   
     <p class="text-secondary">Multidimensional scaling of pairwise distances from TCRdist package of all TCRs from bulkRNAseq. Blue highlights the TCRs found in the pool selected, and their size reflects the proportion of the full sample of TCRs.</p>
 </article>
+
+<article class="media content-section">
+  <div class="media-body">    
+  <br>
+  <img style="width: 100%; max-height: 600px" src="static/KCL-content/figures/motif_analysis/all_proportional.svg">
+  <br>
+    <div class="media-body">   
+      <p class="text-secondary"> Motif Analysis for all samples, with pool/treatment averages on the final row. Figures in subpolts were created using the palmotif package, using an average of the top 20 most expanded CDR3 sequences, with all CDR3 sequences from all control treatments as reference. Expanded letters represent aminoacids which are more present in the sample compared to the control references. This is only a preliminary figure - currently working on how to present motif analysis in a clearer more informative way.</p>
+    </div>
+  </article>
 {% endblock content %}

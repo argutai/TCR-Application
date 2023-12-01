@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+  {% block content %}
+  <center>
+    <h1>{{ sample.Sample }}</h1>
+  </center>
+    <article class="media content-section">
+      <img src="static/KCL-content/figures/Sample_bubbles/{{ sample.Sample }}.svg" width=400 height=400>
+      <div class="media-body">    
+        <br></br>
+        <p>Treatment: {{ sample.pool }}<br>
+          Sample type: {{ sample.sample_type }}<br>
+          Sequencing type: {{ sample.sequencing }}</p>
+        <br></br>
+        <p>Patient: {{ sample.patient_id }}<br>
+          HLA A: {{ sample.HLAA }}<br>
+          HLA B: {{ sample.HLAB }}<br>
+          HLA C: {{ sample.HLAC }}<br>
+          IHC: {{ sample.IHC }}<br>
+          Genomics: {{ sample.Genomics }}<br>
+          Hormad1 status: {{ sample.HORMAD1 }} </p>
+      </div>
+    </article>
+
+    <article class="media content-section">
+      <div>
+    <table border="1" class="dataframe" style="width:100%">
+      <thead>
+        <tr style="text-align: right; white-space:nowrap">
+          <th style="width:70%">clonotype</th>
+          {% for column in df.columns[1:] %}
+          <th>{{ column }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in range(table_len) %}
+        <tr>
+          {% for var in df.columns %}
+          <td>{{ df[var][i] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+      <p>Table: The top {{ table_len }} clonotypes along with their count and proportion. The sample proportion of each clonotype is compared to each control (DMSO, Neg, or CEF) that exists for the same pbmc sample.
+      Fisher's Exact test (two tailed) is used, where * denotes p<0.05, ** is p<0.005, *** is p<0.0005, . denotes a non-significant p-value, and .. denotes a significant p value in the opposite direction - i.e., clonotype is more expanded in control than in test.
+    </p>
+  </div>
+  </article>
+
+  {% endblock content %}
