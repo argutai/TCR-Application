@@ -1,9 +1,8 @@
-   
 from flask import render_template, request, render_template_string
-from app.models import Date, IpView, Overview_legend
+from app.models import Date, IpView
 from app.render_doc import docx_as_html
 from app import app, db
-from app.logic import fig_list, autoSampleList, filter_attributes
+from app.logic import fig_list, autoSampleList, filter_attributes, sortby_attributes
 import datetime
 import logging
 import pandas as pd
@@ -75,7 +74,6 @@ def TCRdist():
 def library(): 
     # Define attribute to filter by - any column from metadata
     filtered_sample_list = autoSampleList; search_query = []
-    
     dictionary = {}
     for attribute in filter_attributes:
         dictionary[attribute] = list(set(getattr(fsample, attribute) for fsample in autoSampleList))
@@ -83,6 +81,11 @@ def library():
         if filter is not None:
             search_query.append(filter)
             filtered_sample_list = [fsample for fsample in filtered_sample_list if getattr(fsample, attribute) == filter]
+    
+    sortby = request.form.get('sortby')
+    if sortby is not None:
+        search_query.append(sortby)
+        filtered_sample_list = sorted(filtered_sample_list, key=lambda x: float(getattr(x, sortby)))
 
     search_query = ', '.join(search_query)
     return render_template('library.html', search_query=search_query, filtered_sample_list=filtered_sample_list, dictionary=dictionary)

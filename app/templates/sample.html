@@ -19,6 +19,24 @@
           Genomics: {{ sample.Genomics }}<br>
           Hormad1 status: {{ sample.HORMAD1 }} </p>
       </div>
+
+    </article>
+    <article class="media content-section">
+      <div class="media-body">    
+        <p> TCR total: {{ sample.N }}<br><br>
+            Shannon's index: {{ sample.shannons }}<br>
+            {% if sample.DMSOshannon %}
+              DMSO: {{ sample.DMSOshannon }} (p = {{ sample.DMSOpval_bc55 }})
+            {% endif %}
+            {% if sample.Negshannon %}
+              Neg: {{ sample.Negshannon }} (p = {{ sample.Negpval_bc55 }})
+            {% endif %}
+            {% if sample.CEFshannon %}
+              CEF: {{ sample.CEFshannon }} (p = {{ sample.CEFpval_bc55 }})
+            {% endif %}
+            <br><br>
+            Simpsons's index: {{ sample.simpsons }}<br>
+      </div>
     </article>
 
     <article class="media content-section">

@@ -19,8 +19,22 @@
       <br><br>
   </form>
 
-  <p>{{ search_query }}</p>
+  <form method="post" name="sortby" action="/library">
+    <select name="sortby" id="sortby">
+      <option value="" disabled selected>all</option>
+      <option value="N">Sample size</option>
+      <option value="shannons">Shannon's</option>
+      <option value="simpsons">Simposon's</option>
+      <option value="gutais">Dominant clonotype</option>
+    </select>
+    <input type="submit" value="Sort">
+  </form>
 
+  <br>
+  {%if search_query %}
+  <p>Query: {{ search_query }}</p>
+  {% endif %}
+  
   <section id="photoArray">
     {% for sample in filtered_sample_list %}
       <div>

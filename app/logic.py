@@ -36,7 +36,8 @@ fig_list = initialise_bubble_overlay()
 class Samples:
     def __init__(self, row):
         for i in range(len(row)):
-            setattr(self, row.index[i], row[i])
+            if str(row[i]) != 'nan':
+                setattr(self, row.index[i], str(row[i]))
         self.id = row[0]
 
     def __repr__(self):
@@ -46,10 +47,28 @@ def initialise_samples():
     autoSampleList = []
     for i in range(len(metadata)):
         row = metadata.iloc[i]
-        new_fig = Samples(row)
-        autoSampleList.append(new_fig)
+        new_sample = Samples(row)
+        autoSampleList.append(new_sample)
     return autoSampleList
 
-autoSampleList = initialise_samples()
+autoSampleList = initialise_samples() 
+
 
 filter_attributes = ['patient_id', 'pool', 'protocol', 'sequencing', 'sample_type']
+sortby_attributes = ['N', 'shannons', 'simpsons', 'gutais']
+
+### Testing ###
+# sample = [ s for s in autoSampleList if s.id == 'KCL710-A_Pool7' ][0]
+# print([ s for s in autoSampleList if s.id == 'KCL710-A_Pool7' ])
+# print([ s for s in autoSampleList if s.id == 'KCL710-A_Pool7' ])
+
+
+
+# print(dir(sample))
+# print(sample.Negpval)
+# print(sample.Negpval_bc55)
+
+# # print(sample.DMSOpval)
+
+# print(sample.CEFpval_bc55)
+
