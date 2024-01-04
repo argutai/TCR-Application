@@ -47,6 +47,21 @@ def home():
     page_hit_to_db('home')
     return render_template('home.html', title='TCR Analysis Home')
 
+@app.route("/")
+@app.route("/SChome")
+def SChome():
+    return render_template('SChome.html')
+
+@app.route("/")
+@app.route("/WTA_pipeline_report")
+def WTA_pipeline_report():
+    return render_template('WTA_Pipeline_Report.html')
+
+@app.route("/")
+@app.route("/TCR_pipeline_report")
+def TCR_pipeline_report():
+    return render_template('TCR_Pipeline_Report.html')
+
 @app.route("/doc-of-truth")
 def doc_of_truth():
     page_hit_to_db('docs')

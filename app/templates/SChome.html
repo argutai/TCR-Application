@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    <center>
+        <h1>Single Cell</h1>
+    </center>   
+    <article class="media content-section">
+    <div class="media-body">
+        <h4>BD pipeline reports:</h4>
+        <ul>
+            <li><a href="{{ url_for('WTA_pipeline_report') }}" target="_blank">WTA 04/01/2024</a></li>
+            <li><a href="{{ url_for('TCR_pipeline_report') }}" target="_blank">TCR 04/01/2024</a></li>
+        </ul>
+    </div>
+    </article>
+{% endblock content %}
